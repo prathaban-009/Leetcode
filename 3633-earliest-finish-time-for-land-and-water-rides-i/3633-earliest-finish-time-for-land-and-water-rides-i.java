@@ -28,3 +28,71 @@ class Solution {
         
     }
 }
+// class Solution {
+
+//     public int earliestFinishTime(int[] landStart,
+//                                   int[] landDuration,
+//                                   int[] waterStart,
+//                                   int[] waterDuration) {
+
+//         int landCount = landStart.length;
+//         int waterCount = waterStart.length;
+
+//         // Earliest time any land ride can finish
+//         int earliestLandFinish = Integer.MAX_VALUE;
+
+//         for (int i = 0; i < landCount; i++) {
+//             int finishTime = landStart[i] + landDuration[i];
+//             earliestLandFinish = Math.min(earliestLandFinish, finishTime);
+//         }
+
+//         // Earliest time any water ride can finish
+//         int earliestWaterFinish = Integer.MAX_VALUE;
+
+//         // Final answer
+//         int answer = Integer.MAX_VALUE;
+
+//         /*
+//          * Case 1:
+//          * Complete a land ride first,
+//          * then take a water ride.
+//          */
+//         for (int i = 0; i < waterCount; i++) {
+
+//             int waterRideAvailableAt = waterStart[i];
+
+//             int startWaterRide =
+//                     Math.max(earliestLandFinish, waterRideAvailableAt);
+
+//             int finishWaterRide =
+//                     startWaterRide + waterDuration[i];
+
+//             answer = Math.min(answer, finishWaterRide);
+
+//             earliestWaterFinish = Math.min(
+//                     earliestWaterFinish,
+//                     waterStart[i] + waterDuration[i]
+//             );
+//         }
+
+//         /*
+//          * Case 2:
+//          * Complete a water ride first,
+//          * then take a land ride.
+//          */
+//         for (int i = 0; i < landCount; i++) {
+
+//             int landRideAvailableAt = landStart[i];
+
+//             int startLandRide =
+//                     Math.max(earliestWaterFinish, landRideAvailableAt);
+
+//             int finishLandRide =
+//                     startLandRide + landDuration[i];
+
+//             answer = Math.min(answer, finishLandRide);
+//         }
+
+//         return answer;
+//     }
+// }
