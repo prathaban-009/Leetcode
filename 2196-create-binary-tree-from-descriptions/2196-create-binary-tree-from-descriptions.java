@@ -14,62 +14,41 @@
  * }
  */
 class Solution {
-   
-    public TreeNode createBinaryTree(int[][] des) {
+    public TreeNode createBinaryTree(int[][] descriptions) {
 
-        HashMap<Integer,TreeNode> tree=new HashMap<>();
-
+        HashMap<Integer,TreeNode> tree = new HashMap<>();
         HashSet<Integer> children = new HashSet<>();
-        // TreeNode root;
 
-
-        for(int i=0;i<des.length;i++)
+        for(int comp[] : descriptions )
         {
-            if(!tree.containsKey(des[i][0]))
+            tree.putIfAbsent(comp[0],new TreeNode(comp[0]));
+            tree.putIfAbsent(comp[1],new TreeNode(comp[1]));
+
+            children.add(comp[1]);
+
+            if(comp[2]==1)
             {
-                TreeNode newNode=new TreeNode(des[i][0]);
-                tree.put(des[i][0],newNode);
-                // root.put(des[i][0],newNode);
-                 
-            }
-
-            
-            if(!tree.containsKey(des[i][1]))
-            {
-                TreeNode newNode=new TreeNode(des[i][1]);
-                tree.put(des[i][1],newNode);
-
-                
-                // if(root.containsKey(des[i][1]))
-                // {
-                //     root.remove(des[i][1]);
-                // }
-
-            }
-
-            if(des[i][2]==1)
-            {
-                TreeNode left=tree.get(des[i][1]);
-                TreeNode parent=tree.get(des[i][0]);
-                children.add(des[i][1]);
-                parent.left=left;
+                tree.get(comp[0]).left=tree.get(comp[1]);
             }else
             {
-                TreeNode right=tree.get(des[i][1]);
-                TreeNode parent=tree.get(des[i][0]);
-                children.add(des[i][1]);
-                parent.right=right;
+                tree.get(comp[0]).right=tree.get(comp[1]);
             }
+        }
 
-            
-        }
         TreeNode ans=null;
-        
-        for(int arr[] : des)
+
+        for(int[] d : descriptions)
         {
-            if(!children.contains(arr[0]))
-            ans=tree.get(arr[0]);
+            int parentVal = d[0];
+
+            if(!children.contains(parentVal))
+            {
+                return tree.get(parentVal);
+            }
         }
+        
+
         return ans;
+        
     }
 }
