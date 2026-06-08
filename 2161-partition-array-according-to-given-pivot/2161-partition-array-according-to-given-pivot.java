@@ -1,40 +1,39 @@
 class Solution {
-    public int[] pivotArray(int[] nums, int pivot) {
-
-        ArrayList<Integer> smaller=new ArrayList<>();
-        ArrayList<Integer> equal=new ArrayList<>();
-        ArrayList<Integer> greater=new ArrayList<>();
-
-        for(int num:nums)
+    private void reverse(int arr[],int start,int end)
+    {
+        while(start<=end)
         {
-            if(num<pivot)
+            int temp=arr[start];
+            arr[start++]=arr[end];
+            arr[end--]=temp;
+        }
+    }
+    public int[] pivotArray(int[] nums, int pivot) {
+        int n = nums.length;
+
+        int ans[]=new int[n];
+
+        int s=0;
+        int e=n-1;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]<pivot)
             {
-                smaller.add(num);
-            }else if(num==pivot)
+                ans[s++]=nums[i];
+
+            }else if(nums[i]>pivot)
             {
-                equal.add(num);
-            }else
-            {
-                greater.add(num);
+                ans[e--]=nums[i];
             }
         }
+        // e++;
 
-        int j=0;
-        for(int i=0;i<smaller.size();i++)
-        {
-            nums[j++]=smaller.get(i);
-        }
-         for(int i=0;i<equal.size();i++)
-        {
-            nums[j++]=equal.get(i);
+        while(s<=e)
+        ans[s++]=pivot;
 
-        } for(int i=0;i<greater.size();i++)
-        {
-            nums[j++]=greater.get(i);
-        }
+        reverse(ans,e+1,n-1);
 
-        return nums;
-        
+        return ans;
         
     }
 }
