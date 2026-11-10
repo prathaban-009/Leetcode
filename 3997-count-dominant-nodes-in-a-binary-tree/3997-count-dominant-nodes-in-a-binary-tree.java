@@ -26,11 +26,11 @@ class Solution {
         int max = Math.max(left, right);
         if (node.val >= max) {
             count++;
-            System.out.println(node.val);
+            // System.out.println(node.val);
         }
 
-        max = Math.max(max, node.val);
-        return max;
+
+        return Math.max(max, node.val);
 
     }
 
