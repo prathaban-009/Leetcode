@@ -1,62 +1,51 @@
 class Solution {
-    List<String> result=new ArrayList<>();
-    int n;
+    List<String> result ;
+    int l;
 
-    public boolean isValid(String s) {
+    private boolean isValid(StringBuilder sb)
+    {
+        char arr[]=sb.toString().toCharArray();
+        Stack<Character> st = new Stack<>();
 
-        Stack<Character > st = new Stack<>();
-
-        char ch[]=s.toCharArray();
-        for(int i=0;i<ch.length;i++)
+        for(char ch :arr)
         {
-            if(ch[i]=='(' || ch[i]=='{' || ch[i]=='[')
-            st.push(ch[i]);
-            else 
-            {
+            if(ch=='(')
+            st.push(ch);
+            else{
                 if(st.isEmpty())return false;
-                char tc=ch[i];
-                char sc=st.pop();
-                if( (tc==')' && sc!='(')   ||  
-                    (tc==']' && sc!='[')   || 
-                    (tc=='}' && sc!='{')  )
-                        return false;
- 
+                
+                char pop=st.pop();
+                if(pop!='(' && ch==')')
+                return false;
             }
         }
-        
+
         return st.isEmpty();
     }
-    public void generate(StringBuilder sb) 
+    private void generate(StringBuilder sb)
     {
-        
-        if(sb.length()==2*n)
+        if(sb.length()==l*2)
         {
-            System.out.println(sb.toString());
-            String temp=sb.toString();
-            //is valid logic need build
-            if(isValid(sb.toString()))
-            result.add(temp);
+            // System.out.println(sb.toString());
+            if(isValid(sb))
+            result.add(sb.toString());
             return;
         }
 
-       
-            // st.push(')');
-            sb.append(")");
-            // System.out.println(sb.toString());
-            generate(sb);
-            sb.deleteCharAt(sb.length() - 1);
+        sb.append(")");
+        generate(sb);
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("(");
+        generate(sb);
+        sb.deleteCharAt(sb.length()-1);
 
-            sb.append("(");
-            // st.push('(');
-            generate(sb);
-             sb.deleteCharAt(sb.length() - 1);
     }
-    public List<String> generateParenthesis(int l) {
-
-        n=l;
+    public List<String> generateParenthesis(int n) {
+        l=n;
+        result= new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         generate(sb);
-        return result;        
+        return result;
     }
 }
