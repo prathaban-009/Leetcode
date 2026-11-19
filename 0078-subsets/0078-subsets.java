@@ -12,7 +12,7 @@ class Solution {
             }
 
             arr.add(nums[i]);
-            System.out.println(arr);
+            // System.out.println(arr);
             generate(arr,nums,i+1);
             arr.remove(arr.size()-1);
             
